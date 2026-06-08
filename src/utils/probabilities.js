@@ -1,10 +1,10 @@
 // Weighted probabilities for each prize (must sum to 100)
 export const PRIZE_WEIGHTS = {
-  'Sticker':        60,
-  'Try Again':      12,
-  'T-Shirt':        13,
-  'Notebook':       12,
-  'Fhenix Package':  1,
-  'Tote Bag':        1,
-  'Face Cap':        1,
+  Sticker: 55,
+  "Try Again": 13,
+  "T-Shirt": 16,
+  Notebook: 13,
+  "Fhenix Package": 1,
+  "Tote Bag": 1,
+  "Face Cap": 1,
 };

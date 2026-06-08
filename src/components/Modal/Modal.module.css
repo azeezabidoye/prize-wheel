@@ -111,6 +111,14 @@
   margin: 4px 0 12px;
 }
 
+.singleNote {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 12px 0 0;
+  text-align: center;
+}
+
 /* ── Prize display box ── */
 .prizeBox {
   display: block;

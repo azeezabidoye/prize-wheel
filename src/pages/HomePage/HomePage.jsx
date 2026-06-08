@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 import Button from '../../components/Button/Button';
+import VersionSelectModal from '../../components/VersionSelectModal/VersionSelectModal';
 import styles from './HomePage.module.css';
 
 const PRIZE_LIST = [
@@ -15,10 +15,10 @@ const PRIZE_LIST = [
 ];
 
 export default function HomePage() {
-  const [name, setName]   = useState('');
-  const [error, setError] = useState('');
-  const { setUserName }   = useApp();
-  const navigate          = useNavigate();
+  const [name,             setName]             = useState('');
+  const [error,            setError]            = useState('');
+  const [showVersionModal, setShowVersionModal] = useState(false);
+  const { setUserName, resetSession }           = useApp();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,7 +28,13 @@ export default function HomePage() {
       return;
     }
     setUserName(trimmed);
-    navigate('/game');
+    setShowVersionModal(true);
+  };
+
+  const handleVersionModalClose = () => {
+    // User cancelled version selection — clear the name we just set
+    resetSession();
+    setShowVersionModal(false);
   };
 
   return (
@@ -83,6 +89,11 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Version selection modal — shown after name is validated */}
+      {showVersionModal && (
+        <VersionSelectModal onClose={handleVersionModalClose} />
+      )}
     </div>
   );
 }

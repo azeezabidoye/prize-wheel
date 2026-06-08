@@ -8,23 +8,29 @@ import Modal from '../../components/Modal/Modal';
 import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 import styles from './GamePage.module.css';
 
+const MODE_META = {
+  multi:  { label: '🔄 Free Play',  cls: 'badgeMulti'  },
+  single: { label: '⚡ One-Shot',   cls: 'badgeSingle' },
+};
+
 export default function GamePage() {
-  const { userName, setSpinResult, setModalOpen } = useApp();
+  const { userName, gameVersion, resetSession } = useApp();
   const { rotation, isSpinning, spin } = useWheel();
   const navigate = useNavigate();
 
-  // Redirect to home if no name (e.g. hard refresh)
+  // Redirect if session is not initialised (e.g. hard refresh)
   useEffect(() => {
-    if (!userName) navigate('/', { replace: true });
-  }, [userName, navigate]);
+    if (!userName || !gameVersion) navigate('/', { replace: true });
+  }, [userName, gameVersion, navigate]);
 
   const handleBack = () => {
-    setSpinResult(null);
-    setModalOpen(false);
+    resetSession();
     navigate('/');
   };
 
-  if (!userName) return null;
+  if (!userName || !gameVersion) return null;
+
+  const mode = MODE_META[gameVersion];
 
   return (
     <div className={styles.page}>
@@ -35,6 +41,7 @@ export default function GamePage() {
         </button>
         <h1 className={styles.title}>🎡 Prize Wheel</h1>
         <div className={styles.headerRight}>
+          <span className={`${styles.modeBadge} ${styles[mode.cls]}`}>{mode.label}</span>
           <span className={styles.playerBadge}>👤 {userName}</span>
           <ThemeToggle />
         </div>
@@ -43,7 +50,6 @@ export default function GamePage() {
       {/* ── Main game area ── */}
       <main className={styles.main}>
         <div className={styles.wheelArea}>
-          {/* Fixed pointer sits above the wheel */}
           <Pointer />
           <Wheel rotation={rotation} isSpinning={isSpinning} onSpin={spin} />
         </div>
@@ -51,7 +57,9 @@ export default function GamePage() {
         <p className={`${styles.hint} ${isSpinning ? styles.hintSpinning : ''}`}>
           {isSpinning
             ? '🌀 Spinning… good luck!'
-            : 'Tap SPIN in the centre of the wheel!'}
+            : gameVersion === 'single'
+              ? '⚡ One spin — make it count!'
+              : 'Tap SPIN in the centre of the wheel!'}
         </p>
       </main>
 
