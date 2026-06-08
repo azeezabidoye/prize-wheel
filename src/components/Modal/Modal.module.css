@@ -1,0 +1,254 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Base modal card ── */
+.modal {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 40px 36px 36px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1);   }
+}
+
+/* ── Close button ── */
+.closeX {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.closeX:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* ── Shared content elements ── */
+.icon {
+  font-size: 4rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.bouncing {
+  animation: bounce 0.8s ease 0.2s both;
+}
+
+@keyframes bounce {
+  0%   { transform: scale(0.5); opacity: 0; }
+  60%  { transform: scale(1.2); opacity: 1; }
+  80%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.playerName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent-light);
+  margin-bottom: 4px;
+}
+
+.wonLabel {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.message {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin: 8px 0 20px;
+  line-height: 1.5;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin: 4px 0 12px;
+}
+
+/* ── Prize display box ── */
+.prizeBox {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 10px 28px;
+  background: var(--accent-gradient);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+}
+
+.prizeBoxBig {
+  font-size: 1.4rem;
+  padding: 12px 32px;
+  animation: shimmer 2s linear infinite;
+  background-size: 200% auto;
+  background-image: linear-gradient(90deg, #7c3aed, #db2777, #f59e0b, #7c3aed);
+}
+
+@keyframes shimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ── Action buttons ── */
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 32px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  letter-spacing: 0.02em;
+}
+
+.claimBtn {
+  display: block;
+  width: fit-content;
+  margin: 28px auto 0;
+  background: var(--btn-gradient);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.45);
+}
+
+.claimBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.6);
+}
+
+.retryBtn {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.retryBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+/* ── Variant-specific ── */
+.winner {
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+.bigWin {
+  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), flashBorder 1s ease 0.3s 3;
+}
+
+@keyframes flashBorder {
+  0%, 100% { border-color: rgba(124, 58, 237, 0.4); box-shadow: var(--shadow-card); }
+  50%       { border-color: #f59e0b; box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.3), var(--shadow-card); }
+}
+
+.flashRing {
+  position: absolute;
+  inset: -2px;
+  border-radius: 24px;
+  pointer-events: none;
+  border: 3px solid transparent;
+  animation: ringFlash 0.6s ease-in-out 0.3s 5 alternate;
+}
+
+@keyframes ringFlash {
+  from { border-color: #7c3aed; }
+  to   { border-color: #f59e0b; }
+}
+
+.tryAgain { border-color: rgba(119, 140, 163, 0.4); }
+.void     { border-color: rgba(239, 68, 68, 0.4); }
+
+/* Congrats banner row */
+.congratsBanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.starsLeft, .starsRight {
+  font-size: 1.2rem;
+  animation: starPulse 1.2s ease-in-out infinite alternate;
+}
+
+.starsRight { animation-delay: 0.4s; }
+
+@keyframes starPulse {
+  from { opacity: 0.6; transform: scale(0.9); }
+  to   { opacity: 1;   transform: scale(1.15); }
+}
+
+.rainbow {
+  background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #a855f7, #f72585);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rainbowShift 3s linear infinite;
+  background-size: 200% auto;
+}
+
+@keyframes rainbowShift {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .modal {
+    padding: 28px 20px 24px;
+    border-radius: 20px;
+  }
+  .title { font-size: 1.4rem; }
+  .icon  { font-size: 3rem; }
+}
